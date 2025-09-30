@@ -10,3 +10,17 @@ numpy
 scikit-learn
 joblib
 plotly
+
+# Machine Learning and Data Processing
+imbalanced-learn  # For handling imbalanced datasets using SMOTE
+xgboost  # For XGBoost models
+lightgbm  # For LightGBM models
+matplotlib  # For plotting
+seaborn  # For statistical visualizations
+scipy  # Required by scikit-learn
+threadpoolctl  # Required by scikit-learn
+
+# Data Handling
+pytz  # For timezone handling
+tzdata  # For timezone data
+python-dateutil  # For date handling
