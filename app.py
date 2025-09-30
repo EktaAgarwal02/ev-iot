@@ -19,6 +19,14 @@ app.secret_key = "dev-secret-key-change-in-production"  # for flash messages
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ev_predict.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Load environment variables from .env file
+from dotenv import load_dotenv
+load_dotenv()
+
+# Use ENV from environment variables
+ENV = os.environ.get("ENV", "development")
+app.config['ENV'] = ENV
+
 # Initialize extensions
 db = SQLAlchemy(app)
 login_manager = LoginManager()

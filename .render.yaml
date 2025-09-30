@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: ev-iot-app
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    plan: free
+    envVars:
+      - key: ENV
+        value: production
+    autoDeploy: true
