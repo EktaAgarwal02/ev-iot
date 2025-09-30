@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+{% block title %}About - EVIoT Predict{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+        padding: 4rem 0;
+        margin-bottom: 3rem;
+    }
+    
+    .hero-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+    }
+    
+    .feature-card {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        text-align: center;
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 2rem;
+        color: white;
+    }
+    
+    .stats-section {
+        background:url("{{ url_for('static', filename='image/aniii.gif') }}") center/cover;
+        padding: 3rem 0;
+        margin: 3rem 0;
+    }
+    
+    .stat-item {
+        text-align: center;
+        padding: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+        color: var(--secondary-color);
+        font-weight: 500;
+    }
+    
+    .tech-stack {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: var(--shadow);
+    }
+    
+    .tech-item {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        margin: 0.25rem;
+        font-weight: 500;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container text-center">
+        <h1 class="hero-title">About EVIoT Predict</h1>
+        <p class="hero-subtitle">Advanced predictive maintenance for electric vehicles using machine learning and IoT data</p>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-12 text-center mb-5">
+            <h2 class="page-title">Project Overview</h2>
+            <p class="page-subtitle">This project focuses on predictive maintenance for electric vehicles using IoT and machine learning. By analyzing sensor data, it predicts system failures in advance, helping reduce breakdowns, improve safety, and extend vehicle lifespan.</p>
+        </div>
+    </div>
+    
+    <div class="row g-4 mb-5">
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card">
+                <img src="/static/image/tt.gif" 
+        alt="Goal GIF" style="height: 150px; object-fit: auto;">
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card">
+                <img src="/static/image/third.gif" 
+        alt="Goal GIF" style="height: 250px; object-fit: auto;">
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card">
+               
+                <img src="/static/image/evc.gif" 
+     alt="Goal GIF" style="height: 250px; object-fit: cover;">
+
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card">
+                
+                <h1>🚀 Goal</h1><br>
+                <p>To build an intelligent system that predicts EV failures in advance, reducing downtime and ensuring smoother and safer rides.</p>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card">
+                <h1>🎯 Objectives</h1><br>
+                <p>Use IoT sensor data and machine learning to identify early warning signs of system issues and provide actionable maintenance insights..</p>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card">
+                <h1>🌍 Impact & 💡Benefits</h1>
+                <p>Improves EV reliability, reduces repair costs, and supports sustainable transport while enhancing user trust and extending vehicle lifespan..</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="stats-section" style="position: relative; text-align: center; color: white; padding: 50px 20px;">
+    <div class="overlay" style="position: absolute; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.5); z-index:1;"></div>
+    <div class="container" style="position: relative; z-index:2;">
+        <h1>Future Scope</h1>
+        <p>The EV IoT Predictive Maintenance system can evolve to monitor vehicles in real-time using smart IoT sensors. Advanced AI models will predict failures faster and more accurately, helping users avoid costly breakdowns. Future enhancements could include fleet-wide maintenance management, mobile alerts, and optimized schedules, ensuring safer, smarter, and more reliable electric vehicles.</p>
+    </div>
+</div>
+
+
+<!-- Tech Stack Section -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="tech-stack text-center">
+                <h3 class="mb-4">Technology Stack</h3>
+                <p class="mb-4">Built with modern technologies for reliability and performance</p>
+                
+                <div class="mb-4">
+                    <span class="tech-item">Flask</span>
+                    <span class="tech-item">SQLAlchemy</span>
+                    <span class="tech-item">Scikit-learn</span>
+                    <span class="tech-item">Pandas</span>
+                    <span class="tech-item">NumPy</span>
+                    <span class="tech-item">Bootstrap 5</span>
+                    <span class="tech-item">JavaScript</span>
+                    <span class="tech-item">SQLite</span>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h5>Backend</h5>
+                        <p>Python Flask with SQLAlchemy ORM, scikit-learn for machine learning, and comprehensive data processing with Pandas.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Frontend</h5>
+                        <p>Modern responsive design with Bootstrap 5, custom CSS animations, and interactive JavaScript components.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Section -->
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+            <div class="card position-relative text-white" 
+                 style="background: url('{{ url_for('static', filename='image/ec.gif') }}') no-repeat center center/cover;">
+                 
+                <!-- Overlay -->
+                <div class="overlay" style="position:absolute; top:0; left:0; width:100%; height:100%; 
+                     background-color: rgba(0,0,0,0.5); z-index:1;"></div>
+                 
+                <div class="card-body p-5 position-relative" style="z-index:2;">
+                    <h3 class="mb-3">Get Started Today</h3>
+                    <p class="mb-4">Ready to implement predictive maintenance for your electric vehicle fleet? Sign up now and start making predictions.</p>
+                    
+                    {% if not current_user.is_authenticated %}
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-3">
+                        <i class="fas fa-user-plus me-2"></i>Create Account
+                    </a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                    </a>
+                    {% else %}
+                    <!--
+                    <a href="{{ url_for('form_predict') }}" class="btn btn-primary btn-lg me-3">
+                        <i class="fas fa-edit me-2"></i>Make Prediction
+                    </a>
+                    <a href="{{ url_for('predict') }}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-upload me-2"></i>Upload CSV
+                    </a>-->
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

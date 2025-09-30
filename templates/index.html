@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+
+{% block title %}EVIoT Predict - Predictive Maintenance for Electric Vehicles{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        background: url("{{ url_for('static', filename='image/ani1.gif') }}") center/cover;
+        color: white;
+        padding: 8rem 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+    }
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba(0,0,0,0.3), rgba(0,0,0,0.1));
+        z-index: 1;
+    }
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                    radial-gradient(circle at 70% 80%, rgba(147, 51, 234, 0.3) 0%, transparent 50%);
+        z-index: 2;
+    }
+    .hero-content { position: relative; z-index: 10; animation: fadeInUp 1s ease-out; }
+    .hero-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 4.5rem;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        background: linear-gradient(45deg, #ffffff, #e0e7ff, #ffffff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: glow 2s ease-in-out infinite alternate;
+    }
+    .hero-subtitle { font-size: 1.5rem; margin-bottom: 1rem; opacity: 0.95; font-weight: 500; }
+    .hero-description { font-size: 1.2rem; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+    .hero-buttons { margin-top: 3rem; animation: fadeInUp 1s ease-out 0.5s both; }
+    .hero-buttons .btn {
+        margin: 0.5rem;
+        padding: 1.2rem 2.5rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border-radius: 50px;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+    .hero-buttons .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3); }
+    .floating-elements { position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 3; pointer-events: none; }
+    .floating-icon { position: absolute; color: rgba(255, 255, 255, 0.1); font-size: 2rem; animation: float 6s ease-in-out infinite; }
+    .floating-icon:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+    .floating-icon:nth-child(2) { top: 60%; left: 80%; animation-delay: 2s; }
+    .floating-icon:nth-child(3) { top: 30%; left: 70%; animation-delay: 4s; }
+    .floating-icon:nth-child(4) { top: 80%; left: 20%; animation-delay: 1s; }
+    .floating-icon:nth-child(5) { top: 10%; left: 50%; animation-delay: 3s; }
+
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(50px);} to {opacity: 1; transform: translateY(0);} }
+    @keyframes glow { from {text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);} to {text-shadow: 2px 2px 20px rgba(255,255,255,0.3), 0 0 30px rgba(59,130,246,0.3);} }
+    @keyframes float { 0%, 100% { transform: translateY(0px) rotate(0deg);} 50% { transform: translateY(-20px) rotate(180deg);} }
+
+    /* Updated Feature Card */
+    .feature-card {
+        background: white;
+        border-radius: 20px;
+        padding: 3rem 2.5rem;
+        min-height: 350px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        text-align: center;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+    }
+    .feature-card:hover { transform: translateY(-10px); box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3); }
+    .feature-icon {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 2rem;
+        font-size: 2.5rem;
+        color: white;
+    }
+
+    .stats-section { background: linear-gradient(135deg, #f8fafc, #e2e8f0); padding: 4rem 0; margin: 4rem 0; }
+    .stat-card { background: white; border-radius: 16px; padding: 2rem; text-align: center; box-shadow: var(--shadow); transition: all 0.3s ease; }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .stat-number { font-size: 3rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.5rem; }
+    .stat-label { color: var(--secondary-color); font-weight: 500; }
+
+    .cta-section { background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: white; padding: 4rem 0; text-align: center; }
+    .cta-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+    .cta-subtitle { font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9; }
+
+    @media (max-width: 768px) {
+        .hero-title { font-size: 3rem; }
+        .hero-subtitle { font-size: 1.3rem; }
+        .hero-description { font-size: 1.1rem; margin-bottom: 2rem; }
+        .hero-buttons .btn { padding: 1rem 2rem; font-size: 1rem; }
+        .floating-icon { font-size: 1.5rem; }
+    }
+    @media (max-width: 480px) {
+        .hero-title { font-size: 2.5rem; }
+        .hero-subtitle { font-size: 1.2rem; }
+        .hero-description { font-size: 1rem; }
+        .hero-buttons .btn { display: block; width: 100%; margin: 0.5rem 0; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="floating-elements">
+        <i class="fas fa-car-battery floating-icon"></i>
+        <i class="fas fa-microchip floating-icon"></i>
+        <i class="fas fa-chart-line floating-icon"></i>
+        <i class="fas fa-cogs floating-icon"></i>
+        <i class="fas fa-bolt floating-icon"></i>
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">EVIoT Predict</h1>
+            <p class="hero-subtitle">Next-Generation Predictive Maintenance</p>
+            <p class="hero-description">
+                Harness the power of AI and machine learning to predict electric vehicle failures before they happen.
+                Our advanced algorithms analyze real-time telemetry data to provide actionable insights,
+                reduce downtime, and optimize maintenance schedules.
+            </p>
+            <div class="hero-buttons">
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('form_predict') }}" class="btn btn-light btn-lg"><i class="fas fa-edit me-2"></i>Failure Prediction</a>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-light btn-lg"><i class="fas fa-chart-bar me-1"></i>Failure Dashboard</a>
+                {% else %}
+                <a href="{{ url_for('register') }}" class="btn btn-light btn-lg"><i class="fas fa-rocket me-2"></i>Get Started Free</a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg"><i class="fas fa-sign-in-alt me-2"></i>Sign In</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-12 text-center mb-5 mt-5">
+            <h2 class="page-title">Key Features</h2>
+            <img src="{{ url_for('static', filename='image/ficon.png') }}" alt="Feature Icon" style="max-width: 300px; opacity: 0.9;">
+            <p class="page-subtitle">Comprehensive predictive maintenance solution for electric vehicles</p>
+        </div>
+    </div>
+    <div class="row g-4 mb-5">
+        <div class="col-lg-6 col-md-6">
+            <div class="feature-card" style="background: url('{{ url_for('static', filename='image/ii.png') }}') no-repeat center/cover; color: white;">
+                <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                <h4>Failure Prediction</h4>
+                <p>Binary risk prediction to identify potential failures early using advanced machine learning algorithms.</p>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="feature-card" style="background: url('{{ url_for('static', filename='image/ii.png') }}') no-repeat center/cover; color: white;">
+                <div class="feature-icon"><i class="fas fa-database"></i></div>
+                <h4>IoT Integration</h4>
+                <p>Processes real-time telemetry data from electric vehicle sensors and IoT devices.</p>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="feature-card" style="background: url('{{ url_for('static', filename='image/ii.png') }}') no-repeat center/cover; color: white;">
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                <h4>User Authentication</h4>
+                <p>Secure user management with role-based access and prediction history tracking.</p>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="feature-card" style="background: url('{{ url_for('static', filename='image/ii.png') }}') no-repeat center/cover; color: white;">
+                <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h4>Responsive Design</h4>
+                <p>Modern, mobile-friendly interface that works seamlessly across all devices.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4"><div class="stat-card"><div class="stat-number">5+</div><div class="stat-label">Years of Data</div></div></div>
+            <div class="col-lg-3 col-md-6 mb-4"><div class="stat-card"><div class="stat-number">15min</div><div class="stat-label">Telemetry Intervals</div></div></div>
+            <div class="col-lg-3 col-md-6 mb-4"><div class="stat-card"><div class="stat-number">8+</div><div class="stat-label">Feature Groups</div></div></div>
+            <div class="col-lg-3 col-md-6 mb-4"><div class="stat-card"><div class="stat-number">90%+</div><div class="stat-label">Accuracy</div></div></div>
+        </div>
+    </div>
+</div>
+
+<!-- How It Works Section -->
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-12 text-center mb-5">
+            <h2 class="page-title">How It Works</h2>
+            <p class="page-subtitle">Simple steps to get started with predictive maintenance</p>
+        </div>
+    </div>
+    <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card" style="background: url('{{ url_for('static', filename='image/createac.png') }}') no-repeat center/cover; color: white;">
+                <div class="feature-icon"><i class="fas fa-user-plus"></i></div>
+                <h4>1. Create Account</h4>
+                <p>Sign up for a free account to access the prediction platform and start making predictions.</p>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card" style="background: url('{{ url_for('static', filename='image/upload.png') }}') no-repeat center/cover; color: white;">
+                <div class="feature-icon"><i class="fas fa-upload"></i></div>
+                <h4>2. Upload Data</h4>
+                <p>Upload your EV telemetry data via CSV file or enter parameters manually through our form.</p>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="feature-card" style="background: url('{{ url_for('static', filename='image/predict.png') }}') no-repeat center/cover; color: white;">
+                <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+                <h4>3. Get Predictions</h4>
+                <p>Receive detailed failure probability predictions and maintenance recommendations instantly.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="cta-section" style="background: url('{{ url_for('static', filename='image/ii.png') }}') no-repeat center center/cover;">
+    <div class="container">
+        <img src="{{ url_for('static', filename='image/another.gif') }}" alt="Electric Vehicle" style="max-width: 150px; opacity: 0.9;">
+        <h2 class="cta-title">Ready to Get Started?</h2>
+        <p class="cta-subtitle">Join thousands of users already using EVIoT Predict for their electric vehicle maintenance needs</p>
+        {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('register') }}" class="btn btn-light btn-lg me-3"><i class="fas fa-user-plus me-2"></i>Create Free Account</a>
+        <a href="{{ url_for('about') }}" class="btn btn-outline-light btn-lg"><i class="fas fa-info-circle me-2"></i>Learn More</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

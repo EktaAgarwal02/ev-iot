@@ -1,0 +1,19 @@
+/saved_models
+EV_Predictive_Maintenance_Dataset_15min.csv
+# Python cache and environment
+__pycache__/
+.venv/
+venv/
+.env
+# Database files
+*.db
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+# Model artifacts
+*.joblib
+*.pkl
+# VS Code settings
+.vscode/
+# OS generated files
+Thumbs.db
+.DS_Store

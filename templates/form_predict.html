@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Manual Prediction - EVIoT Predict{% endblock %}
+
+{% block extra_css %}
+<style>
+    
+    .prediction-form {
+        background: white ;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        margin-bottom: 2rem;
+    }
+    
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .result-card {
+        background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        border-radius: 16px;
+        padding: 2rem;
+        margin-top: 2rem;
+        border-left: 4px solid var(--primary-color);
+    }
+    
+    .result-prediction {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    
+    .result-probability {
+        font-size: 1.2rem;
+        color: var(--secondary-color);
+    }
+    
+    .prediction-success {
+        color: var(--success-color);
+    }
+    
+    .prediction-warning {
+        color: var(--warning-color);
+    }
+    
+    .prediction-danger {
+        color: var(--danger-color);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Manual Prediction</h1>
+    <p class="page-subtitle">Enter EV parameters manually to predict failure probability</p>
+</div>
+
+<div class="prediction-form">
+
+    <form action="{{ url_for('form_predict') }}" method="post">
+        <div class="form-grid">
+            {% for feat, itype in feature_types.items() %}
+                <div class="form-group">
+                    <label class="form-label">{{ feat }}</label>
+                    {% if options and options.get(feat) %}
+                        <select class="form-select" name="{{ feat }}">
+                            {% for opt in options.get(feat) %}
+                                <option value="{{ opt }}" {% if defaults and defaults.get(feat) == opt %}selected{% endif %}>{{ opt }}</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        <input class="form-control" name="{{ feat }}" type="{{ itype }}" step="any" value="{{ defaults.get(feat, '') }}" />
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center">
+            <button class="btn btn-primary btn-lg" type="submit">
+                <i class="fas fa-calculator me-2"></i>Predict Failure
+            </button>
+        </div>
+    </form>
+</div>
+
+{% if result %}
+    <div class="result-card">
+        <div class="result-prediction {% if result.prediction == 0 %}prediction-success{% else %}prediction-danger{% endif %}">
+            <i class="fas fa-{% if result.prediction == 0 %}check-circle{% else %}exclamation-triangle{% endif %} me-2"></i>
+            {{ result.prediction_text }}
+        </div>
+        <div class="result-probability">
+            <strong>Failure Probability:</strong> {{ '%.4f'|format(result.probability) }} ({{ result.confidence }} confidence)
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+
+
