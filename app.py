@@ -33,6 +33,14 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 login_manager.login_message = 'Please log in to access this page.'
+
+# Create database tables
+with app.app_context():
+    try:
+        db.create_all()
+        print("Database initialized successfully!")
+    except Exception as e:
+        print(f"Error initializing database: {e}")
 login_manager.login_message_category = 'info'
 
 # Define models directly in app.py to avoid circular imports
